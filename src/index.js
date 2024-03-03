@@ -1,13 +1,45 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Route, Router, RouterProvider, createBrowserRouter, createRoutesFromElements } from 'react-router-dom';
+import Layout from './Layout';
+import Home from './Component/Home';
+import About from './Component/About';
+import ContactUs from './Component/ContactUs';
+import User from './Component/User';
+import Github, { githubInfoLoader } from './Component/Github';
 
+/*const router= createBrowserRouter([
+  {
+    path:'/',
+    element:<Layout/>,
+    children: [
+      {path:'',
+       element:<Home/>},
+      {path:'about',
+       element:<About/>}
+    ]
+  }
+])*/
+const router= createBrowserRouter(
+  createRoutesFromElements(
+    <Route>
+      <Route path='/' element={<Layout/>}>
+        <Route path="" element={<Home/>}/>
+        <Route path="about" element={<About/>}/>
+        <Route path="contact" element={<ContactUs/>}/>
+        <Route path="user/:userid" element={<User/>}/>
+        <Route loader={githubInfoLoader} path="github" element={<Github/>}/>
+      </Route>
+    </Route>
+  )
+)
+ 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router}/>
   </React.StrictMode>
 );
 
